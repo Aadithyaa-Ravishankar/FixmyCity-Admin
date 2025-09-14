@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixmyCity Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="container-fluid">
+        <div class="row min-vh-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-primary">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bold">FixmyCity</h1>
+                    <p class="lead">Admin Dashboard</p>
+                    <i class="fas fa-tools fa-5x mt-4"></i>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 400px;">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Admin Login</h2>
+                        <p class="text-muted">Access your admin dashboard</p>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-link" onclick="showRegister()">Don't have an account? Register</button>
+                    </div>
+                    
+                    <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Page -->
+    <div id="otpPage" class="container-fluid" style="display: none;">
+        <div class="row min-vh-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-primary">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bold">FixmyCity</h1>
+                    <p class="lead">Admin Verification</p>
+                    <i class="fas fa-shield-alt fa-5x mt-4"></i>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 400px;">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Verify Your Email</h2>
+                        <p class="text-muted">Enter the 6-digit code sent to your email</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="otp-status alert alert-info text-center">
+                            <i class="fas fa-clock me-2"></i>
+                            <span id="otpStatus">Code sent - waiting for verification</span>
+                            <span id="otpTimer" class="ms-2"></span>
+                        </div>
+                    </div>
+                    
+                    <form id="otpForm">
+                        <div class="mb-4">
+                            <div class="otp-input-container">
+                                <input type="text" class="otp-input" maxlength="1" data-index="0">
+                                <input type="text" class="otp-input" maxlength="1" data-index="1">
+                                <input type="text" class="otp-input" maxlength="1" data-index="2">
+                                <input type="text" class="otp-input" maxlength="1" data-index="3">
+                                <input type="text" class="otp-input" maxlength="1" data-index="4">
+                                <input type="text" class="otp-input" maxlength="1" data-index="5">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i class="fas fa-check me-2"></i>Verify Code
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-link" onclick="resendOTP()">
+                            <i class="fas fa-redo me-1"></i>Resend Code
+                        </button>
+                        <br>
+                        <button class="btn btn-link text-muted" onclick="showLogin()" style="font-size: 0.8rem;">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Login
+                        </button>
+                    </div>
+                    
+                    <div id="otpError" class="alert alert-danger mt-3" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="registerPage" class="container-fluid" style="display: none;">
+        <div class="row min-vh-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-primary">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bold">FixmyCity</h1>
+                    <p class="lead">Admin Registration</p>
+                    <i class="fas fa-user-plus fa-5x mt-4"></i>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="w-100" style="max-width: 400px;">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Admin Registration</h2>
+                        <p class="text-muted">Create your admin account</p>
+                    </div>
+                    
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="regName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="regName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="regEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="regPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regState" class="form-label">State</label>
+                            <input type="text" class="form-control" id="regState" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regDistrict" class="form-label">District</label>
+                            <input type="text" class="form-control" id="regDistrict" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i class="fas fa-user-plus me-2"></i>Register
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-link" onclick="showLogin()">Already have an account? Login</button>
+                    </div>
+                    
+                    <div id="registerError" class="alert alert-danger mt-3" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" style="display: none;">
+        <!-- Header -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="#">
+                    <i class="fas fa-tools me-2"></i>FixmyCity Admin
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i><span id="adminName">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid mt-4">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Statistics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <small class="text-muted">Total Complaints</small>
+                                <h4 class="text-primary" id="totalComplaints">0</h4>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">Pending</small>
+                                <h4 class="text-warning" id="pendingComplaints">0</h4>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">In Progress</small>
+                                <h4 class="text-info" id="inProgressComplaints">0</h4>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">Resolved</small>
+                                <h4 class="text-success" id="resolvedComplaints">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaints Feed -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Complaints Feed</h5>
+                            <button class="btn btn-outline-primary btn-sm" onclick="loadComplaints()">
+                                <i class="fas fa-sync-alt me-1"></i>Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="complaintsFeed">
+                                <div class="text-center py-5">
+                                    <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+                                    <p class="text-muted mt-2">Loading complaints...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Detail Modal -->
+    <div class="modal fade" id="complaintModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complaint Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="complaintDetails">
+                    <!-- Complaint details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" id="setInProgressBtn" onclick="updateStatus('in_progress')">
+                        <i class="fas fa-clock me-1"></i>Set In Progress
+                    </button>
+                    <button type="button" class="btn btn-success" id="setResolvedBtn" onclick="updateStatus('resolved')">
+                        <i class="fas fa-check me-1"></i>Mark Resolved
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
