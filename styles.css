@@ -460,6 +460,62 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
+}
+
+.admin-details h6 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 10px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    background: #f8f9fa;
+    color: #007bff;
+    transform: translateX(5px);
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.nav-item i {
+    font-size: 18px;
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item span {
+    font-size: 14px;
 }
 
 .loading-animation {

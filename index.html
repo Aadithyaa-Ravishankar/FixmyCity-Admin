@@ -191,8 +191,28 @@
         <!-- Main Content -->
         <div class="container-fluid mt-4">
             <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-3">
+                <!-- Left Sidebar Navigation -->
+                <div class="col-md-2">
+                    <div class="sidebar-nav">
+                        <div class="nav-menu">
+                            <div class="nav-item" onclick="showSection('dashboard')">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Dashboard</span>
+                            </div>
+                            <div class="nav-item" onclick="showSection('analytics')">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Analytics</span>
+                            </div>
+                            <div class="nav-item" onclick="showSection('admin-profile')">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Admin Profile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Sidebar -->
+                <div class="col-md-3" id="dashboardSidebar">
                     <!-- Statistics Card -->
                     <div class="card mb-3">
                         <div class="card-header">
@@ -218,7 +238,6 @@
                         </div>
                     </div>
                     
-                    
                     <!-- Admin Info Card -->
                     <div class="card mt-3">
                         <div class="card-header">
@@ -239,82 +258,10 @@
                 </div>
 
                 <!-- Main Content Area -->
-                <div class="col-md-9">
-                    <!-- Dashboard Overview Cards -->
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card modern-card text-center">
-                                <div class="card-body">
-                                    <div class="stat-icon mx-auto mb-3">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </div>
-                                    <h3 class="mb-1" id="totalComplaints">0</h3>
-                                    <p class="text-muted mb-0">Total Complaints</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card modern-card text-center">
-                                <div class="card-body">
-                                    <div class="stat-icon mx-auto mb-3">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                    <h3 class="mb-1" id="pendingComplaints">0</h3>
-                                    <p class="text-muted mb-0">Pending</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card modern-card text-center">
-                                <div class="card-body">
-                                    <div class="stat-icon mx-auto mb-3">
-                                        <i class="fas fa-spinner"></i>
-                                    </div>
-                                    <h3 class="mb-1" id="inProgressComplaints">0</h3>
-                                    <p class="text-muted mb-0">In Progress</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card modern-card text-center">
-                                <div class="card-body">
-                                    <div class="stat-icon mx-auto mb-3">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <h3 class="mb-1" id="resolvedComplaints">0</h3>
-                                    <p class="text-muted mb-0">Resolved</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Category Statistics Chart -->
-                    <div class="row mb-4">
-                        <div class="col-md-8">
-                            <div class="card modern-card">
-                                <div class="card-header">
-                                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Complaints by Category</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="categoryChart" width="400" height="200"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card modern-card">
-                                <div class="card-header">
-                                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Category Breakdown</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div id="categoryStats" class="category-stats">
-                                        <!-- Category statistics will be populated here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Filter Tabs -->
+                <div class="col-md-7" id="mainContent">
+                    <!-- Dashboard Section -->
+                    <div id="dashboardSection">
+                    <!-- Complaints Management -->
                     <div class="card modern-card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between align-items-center">
@@ -391,6 +338,39 @@
                                         </div>
                                         <p class="text-muted mt-3">Loading complaints...</p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <!-- Analytics Section -->
+                    <div id="analyticsSection" style="display: none;">
+                        <div class="card modern-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Analytics Dashboard</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center py-5">
+                                    <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                                    <h5 class="text-muted">Analytics Coming Soon</h5>
+                                    <p class="text-muted">Advanced analytics and reporting features will be available here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Admin Profile Section -->
+                    <div id="adminProfileSection" style="display: none;">
+                        <div class="card modern-card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-user-cog me-2"></i>Admin Profile Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center py-5">
+                                    <i class="fas fa-user-cog fa-3x text-muted mb-3"></i>
+                                    <h5 class="text-muted">Profile Settings Coming Soon</h5>
+                                    <p class="text-muted">Admin profile management and settings will be available here.</p>
                                 </div>
                             </div>
                         </div>

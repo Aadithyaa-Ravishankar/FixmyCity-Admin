@@ -111,8 +111,9 @@ async function handleLogin(e) {
         // Store admin data in localStorage
         currentUser = adminData;
         localStorage.setItem('currentAdmin', JSON.stringify(adminData));
-        
+        // Show dashboard
         showDashboard();
+        initializeNavigation();
         loadComplaints();
         loadStatistics();
         
@@ -986,6 +987,48 @@ function filterComplaints(status) {
     
     // Update active tab
     event.target.classList.add('active');
+}
+
+// Navigation functions
+function showSection(sectionName) {
+    // Remove active class from all nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Add active class to clicked nav item
+    event.target.closest('.nav-item').classList.add('active');
+    
+    // Hide all sections
+    document.getElementById('dashboardSection').style.display = 'none';
+    document.getElementById('analyticsSection').style.display = 'none';
+    document.getElementById('adminProfileSection').style.display = 'none';
+    
+    // Hide/show dashboard sidebar based on section
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    const mainContent = document.getElementById('mainContent');
+    
+    if (sectionName === 'dashboard') {
+        document.getElementById('dashboardSection').style.display = 'block';
+        dashboardSidebar.style.display = 'block';
+        mainContent.className = 'col-md-7';
+    } else {
+        dashboardSidebar.style.display = 'none';
+        mainContent.className = 'col-md-10';
+        
+        if (sectionName === 'analytics') {
+            document.getElementById('analyticsSection').style.display = 'block';
+        } else if (sectionName === 'admin-profile') {
+            document.getElementById('adminProfileSection').style.display = 'block';
+        }
+    }
+}
+
+// Initialize dashboard on load
+function initializeNavigation() {
+    // Set dashboard as default active section
+    document.querySelector('.nav-item').classList.add('active');
+    showSection('dashboard');
 }
 
 // Logout
