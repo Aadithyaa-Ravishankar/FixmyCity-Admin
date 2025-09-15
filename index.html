@@ -193,7 +193,8 @@
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-3">
-                    <div class="card">
+                    <!-- Statistics Card -->
+                    <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Statistics</h5>
                         </div>
@@ -216,22 +217,180 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    <!-- Admin Info Card -->
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-user-shield me-2"></i>Admin Info</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="admin-profile">
+                                <div class="admin-avatar mb-3">
+                                    <i class="fas fa-user-circle fa-3x text-primary"></i>
+                                </div>
+                                <div class="admin-details">
+                                    <h6 id="adminDisplayName" class="mb-1">Admin User</h6>
+                                    <small class="text-muted" id="adminLocation">Location</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Complaints Feed -->
+                <!-- Main Content Area -->
                 <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Complaints Feed</h5>
-                            <button class="btn btn-outline-primary btn-sm" onclick="loadComplaints()">
-                                <i class="fas fa-sync-alt me-1"></i>Refresh
-                            </button>
+                    <!-- Dashboard Overview Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card modern-card text-center">
+                                <div class="card-body">
+                                    <div class="stat-icon mx-auto mb-3">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <h3 class="mb-1" id="totalComplaints">0</h3>
+                                    <p class="text-muted mb-0">Total Complaints</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card modern-card text-center">
+                                <div class="card-body">
+                                    <div class="stat-icon mx-auto mb-3">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <h3 class="mb-1" id="pendingComplaints">0</h3>
+                                    <p class="text-muted mb-0">Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card modern-card text-center">
+                                <div class="card-body">
+                                    <div class="stat-icon mx-auto mb-3">
+                                        <i class="fas fa-spinner"></i>
+                                    </div>
+                                    <h3 class="mb-1" id="inProgressComplaints">0</h3>
+                                    <p class="text-muted mb-0">In Progress</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card modern-card text-center">
+                                <div class="card-body">
+                                    <div class="stat-icon mx-auto mb-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="mb-1" id="resolvedComplaints">0</h3>
+                                    <p class="text-muted mb-0">Resolved</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Statistics Chart -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="card modern-card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Complaints by Category</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="categoryChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card modern-card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Category Breakdown</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="categoryStats" class="category-stats">
+                                        <!-- Category statistics will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Tabs -->
+                    <div class="card modern-card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="fas fa-stream me-2"></i>Complaints Management</h5>
+                                <a class="nav-link active" href="#" onclick="filterComplaints('all')">All</a>
+                            </div>
+                            <!-- Advanced Filters -->
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <select class="form-select" id="categoryFilter" onchange="applyFilters()">
+                                        <option value="all">All Categories</option>
+                                        <option value="road">Road</option>
+                                        <option value="water">Water</option>
+                                        <option value="electricity">Electricity</option>
+                                        <option value="waste">Waste</option>
+                                        <option value="traffic">Traffic</option>
+                                        <option value="street_light">Street Light</option>
+                                        <option value="drainage">Drainage</option>
+                                        <option value="public_transport">Public Transport</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="statusFilter" onchange="applyFilters()">
+                                        <option value="all">All Status</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="in_progress">In Progress</option>
+                                        <option value="resolved">Resolved</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="locationFilter" placeholder="Filter by location..." onkeyup="applyFilters()">
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="verificationFilter" onchange="applyFilters()">
+                                        <option value="all">All Verifications</option>
+                                        <option value="0">No Verifications</option>
+                                        <option value="1-5">1-5 Verifications</option>
+                                        <option value="6-10">6-10 Verifications</option>
+                                        <option value="10+">10+ Verifications</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <ul class="nav nav-pills mt-3" id="statusTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" onclick="filterComplaints('all')">
+                                        <span class="badge bg-primary me-1" id="allBadge">0</span>All
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" onclick="filterComplaints('pending')">
+                                        <span class="badge bg-secondary me-1" id="pendingBadge">0</span>Pending
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" onclick="filterComplaints('in_progress')">
+                                        <span class="badge bg-primary me-1" id="progressBadge">0</span>In Progress
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" onclick="filterComplaints('resolved')">
+                                        <span class="badge bg-dark me-1" id="resolvedBadge">0</span>Resolved
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="card-body">
                             <div id="complaintsFeed">
                                 <div class="text-center py-5">
-                                    <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
-                                    <p class="text-muted mt-2">Loading complaints...</p>
+                                    <div class="loading-animation">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="text-muted mt-3">Loading complaints...</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -266,8 +425,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
